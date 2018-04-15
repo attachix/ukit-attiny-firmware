@@ -1,0 +1,1 @@
+Build directory where the compiled application will be saved.

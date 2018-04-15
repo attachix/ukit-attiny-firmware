@@ -1,0 +1,20 @@
+#!/bin/sh
+# Simple bash script that invokes Atmel's avrasm under Non-Windows environment.
+
+if [ -z "$AVRASM_EXE" ]; then
+    AVRASM_EXE=/opt/avrasm/bin/avrasm2.exe
+fi
+
+if [ $# -lt 1 ]; then
+  echo "Usage:\n\t$0 <name>\n";
+  exit 1;
+fi
+
+name="$1"
+shift
+
+if [ ! -e build ]; then
+  mkdir build
+fi
+
+wine $AVRAMS_EXE -fI -o "build/$name.hex"  -m "build/$name.map"  -l "build/$name.lss"  -S "build/$name.tmp"  -W+ie  -itn1634def.inc -d "build/$name.obj"  $name.asm  -I"/home/slavey/avrasm/inc" $@
