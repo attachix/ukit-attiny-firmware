@@ -1,0 +1,29 @@
+sudo: false
+language: cpp
+env:
+  global:
+  - SDK_BUILD=258
+  - secure: 25++EQpuVAQRMnXs5tER4LTBDFAUxQz3VCa3bLGZXVnLssE2q+1+dZzdMImjWgyG5njs93Q5SD7RJat/NLzPcwprZGmSRJKlH6L1zEDfz3VS/rQJ2GDPA26CCglaqb9DfdM+3YdSYO8j+y54ymRTjjLBnp3uVjjyvEUyQSo31+CXrhR5Myayu4HtAqX4a5+cy0MzdulNtkaNPYXRH5jWbWgnFpxzIF8FFU4x5yHkWDYBtA9KnEO+LZ/Hx8cgD/CjBRmZfpw9Q9KMh+5LlaKO95D2ywmFYwAEyncqyPO6EZPnUwDf9PGZ6rmAFygPZyJ6iQei4gurL5I82KgRmaS3zAbnx6ZsTmfVyWXoreTtrb1fg6riHWMiLSloob6r+IbGmFPfNfFrE8JBMVcSnpz/E8A46SmTaLcanFMxINM7u914tZibVDxTVjsF15RYPL28oLrQZR85HjJEsMIznHM7jUJNs9wbdfMpvwR44//ELjmJfB6JsJArBINtcuaq27uwTbCH/+nWOV5aQtdEAAHpI5rqIDvBQQ/7O8ZnKu8AlKQVCXFjSpkmHypFYcYQAG26jkNr5L2lTPLXKbXKhMXjGOmjHHl0THdkc0cv8+QSYik2vUf5mPgG6ct8W1MtucuTvwmApMDUbivMLcztZod9QjYG3l5iDSjzOHaVbnkbajw=
+matrix:
+  include:
+  - os: linux
+    env: SDK_VERSION=1.5.0
+git:
+  submodules: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - wine
+install:
+script:
+- env
+- export DEPLOY='true'
+deploy:
+  provider: script
+  script: sh $TRAVIS_BUILD_DIR/.travis/update-parent.sh "ukit-firmware" "attiny/firmware"
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: "$DEPLOY == true"
