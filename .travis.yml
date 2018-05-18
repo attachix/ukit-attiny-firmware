@@ -17,12 +17,13 @@ addons:
     packages:
     - wine
 install:
+  - wget https://raw.githubusercontent.com/attachix/ukit/master/.travis/update-parent.sh && chmod a+x update-parent.sh
 script:
-- env
-- export DEPLOY='true'
+  - env
+  - export DEPLOY='true'
 deploy:
   provider: script
-  script: sh $TRAVIS_BUILD_DIR/.travis/update-parent.sh "ukit-firmware" "attiny/firmware"
+  script: sh $TRAVIS_BUILD_DIR/update-parent.sh "ukit-firmware" "attiny/firmware"
   skip_cleanup: true
   on:
     tags: true
